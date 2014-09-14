@@ -31,6 +31,11 @@ class docker::params {
           $service_name   = $service_name_default
           $docker_command = $docker_command_default
         }
+        'Debian' : {
+          $package_name   = $package_name_default
+          $service_name   = $service_name_default
+          $docker_command = $docker_command_default
+        }
         default: {
           $package_name   = 'docker.io'
           $service_name   = 'docker.io'
