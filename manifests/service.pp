@@ -38,14 +38,25 @@ class docker::service (
 
   case $::osfamily {
     'Debian': {
-      $hasstatus     = true
-      $hasrestart    = false
+      case $::operatingsystem {
+        'Ubuntu': {
+          $hasstatus     = true
+          $hasrestart    = false
 
-      file { '/etc/init.d/docker':
-          ensure => 'absent',
-          notify => Service['docker'],
+          file { '/etc/init.d/docker':
+            ensure => 'absent',
+            notify => Service['docker'],
+          }
+        }
+        'Debian': {
+          $hasstatus     = true
+          $hasrestart    = true
+        }
+        default: {
+          $hasstatus     = undef
+          $hasrestart    = undef
+        }
       }
-
       file { '/etc/default/docker':
         ensure  => present,
         force   => true,
@@ -71,6 +82,7 @@ class docker::service (
 
   $provider = $::operatingsystem ? {
     'Ubuntu' => 'upstart',
+    'Debian' => 'debian',
     default  => undef,
   }
 
