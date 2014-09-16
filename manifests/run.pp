@@ -23,6 +23,7 @@ define docker::run(
   $disable_network = false,
   $privileged = false,
   $extra_parameters = undef,
+  $cleanup = false,
 ) {
   include docker::params
   $docker_command = $docker::params::docker_command
@@ -45,6 +46,7 @@ define docker::run(
   validate_bool($running)
   validate_bool($disable_network)
   validate_bool($privileged)
+  validate_bool($cleanup)
 
   $ports_array = any2array($ports)
   $expose_array = any2array($expose)

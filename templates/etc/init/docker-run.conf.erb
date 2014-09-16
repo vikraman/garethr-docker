@@ -96,6 +96,7 @@ end script
 post-stop script
 if [ -e "/var/run/docker-<%= @title %>.cid" ]; then
   <%= @docker_command %> kill "$(cat /var/run/docker-<%= @title %>.cid)" && \
-    rm "/var/run/docker-<%= @title %>.cid"
+  rm "/var/run/docker-<%= @title %>.cid" \
+  <% if @cleanup @> && <%= @docker_command %> rm <%= @name %><% end %>
 fi
 end script

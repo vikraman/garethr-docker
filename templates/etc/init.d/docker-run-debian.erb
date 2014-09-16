@@ -103,6 +103,7 @@ stop() {
         if [ -n $cid ]; then
             echo -n $"Stopping $prog: "
             $docker stop $(cat $cidfile)
+            <% if @cleanup %>$docker rm <%= @name %><% end %>
             retval=$?
             [ $retval -eq 0 ] && rm -f $lockfile $cidfile
             return $retval
